@@ -15,6 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Post a comment
+      uses: ./.github/actions/comment
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Run my custom script
       uses: ./.github/actions/my-action
       id: my-action

@@ -1,0 +1,19 @@
+{
+  "name": "comment",
+  "version": "1.0.0",
+  "description": "A Github Action for posting a comment/check-list",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc && ncc build"
+  },
+  "author": "Erik Lumme",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "ncc": "^0.3.6",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0"
+  }
+}

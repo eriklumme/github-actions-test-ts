@@ -1,0 +1,12 @@
+name: 'Check-list Commenter'
+description: 'Posts a check-list on a pull request for the reviewer'
+inputs:
+  token:
+    description: 'The GitHub access token'
+    required: true
+  modified_modules:
+    description: 'A JSON-formatted array of which root-level directories/modules have been modified'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

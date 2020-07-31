@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",         // Should be commonjs because of reasons
+    "esModuleInterop": true,      // Enables interoperability between CommonJS-style imports and ES Modules
+    "target": "es6",              // The Github Actions ubuntu-runner supports ES6
+    "moduleResolution": "node",   // Use Node's way of resolving imports
+    "sourceMap": true,            // Allows viewing the original source when debugging
+    "outDir": "./lib",            // We will output the compiled code to 'lib', which ncc will then compile to a single file in 'dist'
+    "rootDir": "./src",           // Where the source code is located
+    "strict": true                // Stricter checks for language correctness
+  },
+  "exclude": ["node_modules"]
+}
