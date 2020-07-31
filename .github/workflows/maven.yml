@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Run my custom script
-      uses: ./.github/actions/test-action
+      uses: ./.github/actions/my-action
       with:
         modules: 'sub-module,other-module'
         token: ${{ secrets.GITHUB_TOKEN }}
