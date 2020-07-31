@@ -22,10 +22,10 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up JDK 1.8
+      if: ${{contains(fromJson(steps.my-action.outputs.modified_modules), 'other-module')}}
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
 
     - name: Build with Maven
-      if: ${{contains(fromJson(steps.my-action.outputs.modified_modules), 'other-module')}}
       run: mvn -B package --file pom.xml
