@@ -18,12 +18,13 @@ jobs:
     - name: Run my custom script
       uses: ./.github/actions/my-action
       with:
-        modules: 'sub-module,other-module'
         token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
 
     - name: Build with Maven
+      if: ${{contains(fromJson(modified_modules), 'other-module')}}
       run: mvn -B package --file pom.xml

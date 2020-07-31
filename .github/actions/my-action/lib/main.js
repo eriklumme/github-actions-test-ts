@@ -38,7 +38,6 @@ function run() {
             if (context.eventName !== 'pull_request') {
                 core.setFailed('Not a Pull Request, this action only supports PRs');
             }
-            const modules = new Set(core.getInput('modules').split(',').map(str => str.trim()));
             const token = core.getInput('token');
             const client = github.getOctokit(token);
             const response = yield client.repos.compareCommits({
@@ -53,19 +52,15 @@ function run() {
             const modifiedModules = new Set();
             for (const file of response.data.files) {
                 const filename = file.filename;
-                for (const module of modules) {
-                    if (filename.startsWith(module)) {
-                        modifiedModules.add(module);
-                        modules.delete(module);
-                        break;
-                    }
-                }
-                if (modules.size === 0) {
-                    break;
+                const firstSlashIndex = filename.indexOf("/");
+                if (firstSlashIndex !== -1) {
+                    modifiedModules.add(filename.substring(0, firstSlashIndex));
                 }
             }
-            const pullRequest = github.context.payload;
-            console.log(modifiedModules);
+            // Spreading into array, as JSON doesn't work well with Sets out of the box
+            const modifiedModulesJSON = JSON.stringify([...modifiedModules]);
+            console.log(`Setting output modified_modules to: ${modifiedModulesJSON}`);
+            core.setOutput("modified_modules", modifiedModulesJSON);
         }
         catch (e) {
             core.setFailed(e.message);
