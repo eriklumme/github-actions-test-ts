@@ -9,7 +9,7 @@ class SubClassTest {
     @Test
     void testDoubleUp() {
         SubClass subClass = new SubClass();
-        int result = subClass.doubleUp(3);
-        assertEquals(6, result);
+        int result = subClass.doubleUp(4);
+        assertEquals(8, result);
     }
 }
