@@ -36,7 +36,7 @@ function run() {
         try {
             const context = github.context;
             if (context.eventName !== 'pull_request') {
-                console.warn("Not a Pull Request, returning.");
+                console.warn('Not a Pull Request, returning.');
                 return;
             }
             const token = core.getInput('token');
