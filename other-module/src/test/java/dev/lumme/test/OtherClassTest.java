@@ -9,7 +9,6 @@ class OtherClassTest {
     @Test
     void testWhatIsMyName() {
         String result = new OtherClass().whatIsMyName("Bob");
-        assertEquals("I have no idea", result);
-        assertEquals("I have no idea", result);
+        assertEquals("I have no IDEA", result);
     }
 }
