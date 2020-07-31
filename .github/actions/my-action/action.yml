@@ -1,0 +1,12 @@
+name: 'Test Action'
+description: 'Test the modified modules'
+inputs:
+  modules:
+    description: 'A list of modules in the order they should be built if modified'
+    required: true
+  token:
+    description: 'The GitHub access token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
