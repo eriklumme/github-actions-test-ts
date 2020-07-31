@@ -17,6 +17,7 @@ jobs:
 
     - name: Run my custom script
       uses: ./.github/actions/my-action
+      id: my-action
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -26,5 +27,5 @@ jobs:
         java-version: 1.8
 
     - name: Build with Maven
-      if: ${{contains(fromJson(modified_modules), 'other-module')}}
+      if: ${{contains(fromJson(steps.my-action.outputs.modified_modules), 'other-module')}}
       run: mvn -B package --file pom.xml
