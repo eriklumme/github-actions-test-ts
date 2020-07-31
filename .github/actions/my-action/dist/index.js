@@ -524,9 +524,9 @@ function run() {
         try {
             const context = github.context;
             if (context.eventName !== 'pull_request') {
-                console.warn('Not a Pull Request, returning.');
-                return;
+                core.setFailed('Not a Pull Request, this action only supports PRs');
             }
+            const modules = new Set(core.getInput('modules').split(',').map(str => str.trim()));
             const token = core.getInput('token');
             const client = github.getOctokit(token);
             const response = yield client.repos.compareCommits({
@@ -535,9 +535,25 @@ function run() {
                 owner: context.repo.owner,
                 repo: context.repo.repo
             });
-            console.log(response.data.files);
+            if (response.status !== 200) {
+                core.setFailed(`The GitHub API returned an unexpected status ${response.status}`);
+            }
+            const modifiedModules = new Set();
+            for (const file of response.data.files) {
+                const filename = file.filename;
+                for (const module of modules) {
+                    if (filename.startsWith(module)) {
+                        modifiedModules.add(module);
+                        modules.delete(module);
+                        break;
+                    }
+                }
+                if (modules.size === 0) {
+                    break;
+                }
+            }
             const pullRequest = github.context.payload;
-            console.log(pullRequest);
+            console.log(modifiedModules);
         }
         catch (e) {
             core.setFailed(e.message);
