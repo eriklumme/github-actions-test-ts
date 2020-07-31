@@ -28,6 +28,7 @@ jobs:
         java-version: 1.8
 
     - name: Cache Maven dependencies
+      if: success() # only run if previous step ran
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
