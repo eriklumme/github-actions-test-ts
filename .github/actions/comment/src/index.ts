@@ -35,9 +35,8 @@ function getCommentsJson(): any {
 
 function getModifiedModules(): Array<string> {
     const modifiedModules = ['all'];
-    core.getInput("modified_modules").split(",")
-        .map(m => m.trim())
-        .forEach(m => modifiedModules.push(m))
+    const modifiedModulesStr = core.getInput("modified_modules")
+    JSON.parse(modifiedModulesStr).forEach((m: string) => modifiedModules.push(m))
     return modifiedModules;
 }
 

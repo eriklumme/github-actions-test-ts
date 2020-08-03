@@ -1916,9 +1916,8 @@ function getCommentsJson() {
 }
 function getModifiedModules() {
     const modifiedModules = ['all'];
-    core.getInput("modified_modules").split(",")
-        .map(m => m.trim())
-        .forEach(m => modifiedModules.push(m));
+    const modifiedModulesStr = core.getInput("modified_modules");
+    JSON.parse(modifiedModulesStr).forEach((m) => modifiedModules.push(m));
     return modifiedModules;
 }
 function buildComment(modifiedModules) {
