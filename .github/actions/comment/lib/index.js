@@ -52,7 +52,7 @@ function run() {
     });
 }
 function getCommentsJson() {
-    return JSON.parse(fs.readFileSync('../checklist.json', 'utf-8'));
+    return JSON.parse(fs.readFileSync('./.github/actions/comment/checklist.json', 'utf-8'));
 }
 function getModifiedModules() {
     const modifiedModules = ['all'];
