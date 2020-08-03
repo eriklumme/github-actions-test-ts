@@ -1911,7 +1911,8 @@ function run() {
     });
 }
 function getCommentsJson() {
-    return JSON.parse(fs.readFileSync('./.github/actions/comment/checklist.json', 'utf-8'));
+    const checklistPath = core.getInput("checklist_path");
+    return JSON.parse(fs.readFileSync(checklistPath, 'utf-8'));
 }
 function getModifiedModules() {
     const modifiedModules = ['all'];
@@ -1922,10 +1923,14 @@ function getModifiedModules() {
 }
 function buildComment(modifiedModules) {
     const checklist = getCommentsJson();
+    console.log(checklist);
     let commentBody = "";
     for (const module of modifiedModules) {
+        console.log("Checking module " + module);
         if (module in checklist) {
+            console.log("Is in list!");
             for (const check of checklist[module]) {
+                console.log("Adding check!");
                 commentBody += `- [ ] ${check}\n`;
             }
         }

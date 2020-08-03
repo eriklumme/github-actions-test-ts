@@ -7,6 +7,9 @@ inputs:
   modified_modules:
     description: 'A JSON-formatted array of which root-level directories/modules have been modified'
     required: true
+  checklist_path:
+    description: 'The path to the checklist JSON file relative to the root folder'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -26,6 +26,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         modified_modules: steps.my-action.outputs.modified_modules
+        checklist_path: ./.github/workflows/checklist.json
 
     - name: Set up JDK 1.8
       if: ${{contains(fromJson(steps.my-action.outputs.modified_modules), 'other-module')}}
