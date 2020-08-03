@@ -15,16 +15,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Post a comment
-      uses: ./.github/actions/comment
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Run my custom script
       uses: ./.github/actions/my-action
       id: my-action
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Post a comment
+      uses: ./.github/actions/comment
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        modified_modules: steps.my-action.outputs.modified_modules
 
     - name: Set up JDK 1.8
       if: ${{contains(fromJson(steps.my-action.outputs.modified_modules), 'other-module')}}
