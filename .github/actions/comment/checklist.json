@@ -1,0 +1,9 @@
+{
+  "all": [
+    "You **must** make sure that everything is _a-ok_!",
+    "There must be a \n```Text block\nText block```\nEverywhere"
+  ],
+  "other-module": [
+    "You modified `other-module` :joy:, please do it carefully.",
+  ]
+}

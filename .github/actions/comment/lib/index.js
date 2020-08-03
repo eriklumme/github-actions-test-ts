@@ -28,6 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = __importStar(require("fs"));
 const core = __importStar(require("@actions/core"));
 const github = __importStar(require("@actions/github"));
 function run() {
@@ -42,12 +43,35 @@ function run() {
             if (!context.payload.pull_request) {
                 core.setFailed("No pull request found in the context");
             }
-            yield client.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: context.payload.pull_request.number, body: 'Way to go Bob!' }));
+            const commentBody = buildComment(getModifiedModules());
+            yield client.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: context.payload.pull_request.number, body: commentBody }));
         }
         catch (e) {
             core.setFailed(e.message);
         }
     });
+}
+function getCommentsJson() {
+    return JSON.parse(fs.readFileSync('../checklist.json', 'utf-8'));
+}
+function getModifiedModules() {
+    const modifiedModules = ['all'];
+    core.getInput("modified_modules").split(",")
+        .map(m => m.trim())
+        .forEach(m => modifiedModules.push(m));
+    return modifiedModules;
+}
+function buildComment(modifiedModules) {
+    const checklist = getCommentsJson();
+    let commentBody = "";
+    for (const module of modifiedModules) {
+        if (module in checklist) {
+            for (const check of checklist[module]) {
+                commentBody += `- [ ] ${check}\n`;
+            }
+        }
+    }
+    return commentBody;
 }
 run();
 //# sourceMappingURL=index.js.map
