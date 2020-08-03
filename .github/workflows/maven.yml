@@ -25,7 +25,7 @@ jobs:
       uses: ./.github/actions/comment
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        modified_modules: steps.my-action.outputs.modified_modules
+        modified_modules: ${{ steps.my-action.outputs.modified_modules }}
         checklist_path: ./.github/workflows/checklist.json
 
     - name: Set up JDK 1.8
